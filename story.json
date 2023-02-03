@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "nodeType": "storybox",
+    "text": "You walk in a forest and you see a bear. What do you do?",
+    "options": [
+      {
+        "id": 1,
+        "text": "Run away",
+        "next": 2
+      },
+      {
+        "id": 2,
+        "text": "Fight",
+        "next": 3
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nodeType": "storybox",
+    "text": "You run away and the bear chases you. You fall into a hole and die.",
+    "options": [
+      {
+        "id": 1,
+        "text": "Restart",
+        "next": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nodeType": "storybox",
+    "text": "You fight the bear and you win. You get a medal.",
+    "options": [
+      {
+        "id": 1,
+        "text": "Restart",
+        "next": 1
+      }
+    ]
+  }
+]
