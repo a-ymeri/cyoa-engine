@@ -1,0 +1,123 @@
+{
+  "nodes": [
+    {
+      "label": "Starting node",
+      "text": "You stand in a dark corridor, with two paths. The left path is completely silent. The right path has cricket sounds",
+      "options": [
+        {
+          "text": "Take the left path",
+          "value": 0,
+          "next": "2"
+        },
+        {
+          "text": "Take the right path",
+          "value": 0,
+          "next": "3"
+        }
+      ],
+      "x": 437.5292510986328,
+      "y": 51.16672134399414,
+      "id": 1
+    },
+    {
+      "label": "Left path",
+      "text": "You keep walking, your footsteps are the only thing breaking the silence. Suddenly, you trip on a rock.",
+      "options": [
+        {
+          "text": "Investigate rock",
+          "value": 0,
+          "next": "4"
+        },
+        {
+          "text": "Ignore rock and move forward",
+          "value": 0,
+          "next": "5"
+        }
+      ],
+      "x": 307.70001220703125,
+      "y": 276.90754890441895,
+      "id": 3
+    },
+    {
+      "label": "Keep walking",
+      "text": "You keep walking and walking but there is no end. You slowly lose consciousness. You want to stop but you just keep walking. You have made a grave mistake.",
+      "options": [],
+      "x": 413.115478515625,
+      "y": 484.8955078125,
+      "id": 5
+    },
+    {
+      "label": "Death. Yep.",
+      "text": "You died. Why did you not turn back, like come on...",
+      "options": [],
+      "x": 721.9378967285156,
+      "y": 493.8027648925781,
+      "id": 6
+    },
+    {
+      "label": "Right path",
+      "text": "As you keep walking, you start noticing insects beneath your feet. ",
+      "options": [
+        {
+          "text": "Turn back",
+          "value": 0,
+          "next": "1"
+        },
+        {
+          "text": "Keep walking",
+          "value": 0,
+          "next": "6"
+        }
+      ],
+      "x": 640.1712341308594,
+      "y": 282.1126022338867,
+      "id": 2
+    },
+    {
+      "label": "Rock",
+      "text": "The rock turns out to be a button. You click it, and it opens the way out. Congratulations!",
+      "options": [],
+      "x": 155.6815185546875,
+      "y": 483.92309951782227,
+      "id": 4
+    }
+  ],
+  "edges": [
+    {
+      "source": 1,
+      "target": "2"
+    },
+    {
+      "source": 1,
+      "target": "3"
+    },
+    {
+      "source": 3,
+      "target": "4"
+    },
+    {
+      "source": 3,
+      "target": "5"
+    },
+    {
+      "source": 2,
+      "target": "1"
+    },
+    {
+      "source": 2,
+      "target": "6"
+    }
+  ],
+  "selectedNode": {
+    "label": "Keep walking",
+    "text": "You keep walking and walking but there is no end. You slowly lose consciousness. You want to stop but you just keep walking. You have made a grave mistake.",
+    "options": [],
+    "x": 414.8931884765625,
+    "y": 484.8955078125,
+    "id": 5,
+    "xOffset": 68.9080810546875,
+    "yOffset": 41.3953857421875,
+    "active": false
+  },
+  "selectedNodeIndex": 2
+}

@@ -1,0 +1,67 @@
+{
+  "nodes": [
+    {
+      "text": "You are standing in an open field west of a white house, with a boarded front door. There is a small mailbox here.",
+      "id": 0,
+      "exits": [
+        {
+          "direction": "north",
+          "next": 1
+        }
+      ],
+      "items": [
+        {
+          "name": "letter",
+          "description": "A letter.",
+          "actions": {
+            "read": "You read the letter. It says: 'Dear Sir or Madam, We regret to inform you that the bank is closed.'"
+          },
+          "pickable": true
+        }
+      ]
+    },
+    {
+      "text": "You are standing in an open field north of a white house. There is a weird looking box in the corner.",
+      "id": 1,
+      "exits": [
+        {
+          "direction": "south",
+          "next": 0
+        },
+        {
+          "direction": "east",
+          "next": 2
+        }
+      ],
+      "items": [
+        {
+          "name": "letter",
+          "description": "A letter.",
+          "actions": {
+            "read": "You read the letter. It says: 'Dear Sir or Madam, We regret to inform you that the bank is closed.'"
+          }
+        }
+      ]
+    },
+    {
+      "text": "You are inside a building, a well house for a large spring.",
+      "id": 2,
+      "exits": [
+        {
+          "direction": "west",
+          "next": 2
+        }
+      ]
+    }
+  ],
+  "mappings": [
+    ["go", ["walk", "head", "run", "move", "travel"]],
+    ["take", ["grab", "get", "pick"]],
+    ["drop", ["leave", "put"]],
+    ["look", ["examine", "inspect", "read"]],
+    ["inventory", ["i", "inv"]],
+    ["help", ["h", "?"]],
+    ["quit", ["q", "exit"]],
+    ["inventory", ["i", "inv"]]
+  ]
+}
