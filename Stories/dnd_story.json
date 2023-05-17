@@ -2,26 +2,31 @@
   "nodes": [
     {
       "id": 1,
-      "x": 406.2021255493164,
-      "y": -127.37017822265625,
-      "xOffset": 71.65850830078125,
-      "yOffset": 43.59661865234375,
-      "active": false,
-      "text": "You begin your adventure in a foreign land, where magic thrives. Before you is a crossroads between the village of nearby town or the castle. Which way will you seek?",
+      "x": 525.6093521118164,
+      "y": -312.82566833496094,
+      "text": "You begin your adventure in a foreign land, where magic thrives. Before you is a man. You ask the man on which path to take and he offers to guide you. You sense that he could be up to something bad, but you think there may be a chance to convince him to take you somewhere safe.",
       "color": "red",
       "options": [
         {
-          "text": "Head to the castle",
+          "text": "Ask the man for directions (25 CHA)",
           "value": 0,
-          "next": 3
+          "next": 9
         },
         {
-          "text": "Head to the village",
+          "text": "Ignore the man and take the left path",
           "value": 0,
-          "next": "2"
+          "next": 2
+        },
+        {
+          "text": "Ignore the man and take the right path",
+          "value": 0,
+          "next": 3
         }
       ],
-      "label": "Start adventure"
+      "label": "Start adventure",
+      "xOffset": 92.07342529296875,
+      "yOffset": 46.41546630859375,
+      "active": false
     },
     {
       "label": "Village",
@@ -38,12 +43,12 @@
           "next": 6
         }
       ],
-      "x": 193.98614501953125,
-      "y": 77.10540771484375,
+      "x": 283.64227294921875,
+      "y": 157.88751220703125,
       "id": 2,
       "type": "text",
-      "xOffset": 71.55050659179688,
-      "yOffset": 29.50250244140625,
+      "xOffset": 105.0604248046875,
+      "yOffset": 11.877593994140625,
       "active": false
     },
     {
@@ -56,24 +61,24 @@
           "next": "4"
         }
       ],
-      "x": 759.9231414794922,
-      "y": 442.4674987792969,
+      "x": 716.1205291748047,
+      "y": 341.5259704589844,
       "id": 3,
       "type": "text",
-      "xOffset": 59.05377197265625,
-      "yOffset": 41.71026611328125,
+      "xOffset": 92.6253662109375,
+      "yOffset": 21.71063232421875,
       "active": false
     },
     {
       "label": "Young prince",
       "text": "",
       "options": [],
-      "x": 713.6822128295898,
-      "y": 606.9603576660156,
+      "x": 713.0307846069336,
+      "y": 504.6148986816406,
       "id": 4,
       "type": "text",
-      "xOffset": 33.59326171875,
-      "yOffset": 14.891357421875,
+      "xOffset": 76.3077392578125,
+      "yOffset": 18.10577392578125,
       "active": false
     },
     {
@@ -91,12 +96,12 @@
           "next": 7
         }
       ],
-      "x": 87.99339294433594,
-      "y": 272.6521911621094,
+      "x": 89.29338073730469,
+      "y": 315.0257263183594,
       "id": 5,
       "type": "text",
-      "xOffset": 63.767608642578125,
-      "yOffset": 19.40753173828125,
+      "xOffset": 99.40463256835938,
+      "yOffset": 30.58099365234375,
       "active": false
     },
     {
@@ -115,11 +120,11 @@
         }
       ],
       "x": 351.0121154785156,
-      "y": 298.8741455078125,
+      "y": 303.981201171875,
       "id": 6,
       "type": "text",
-      "xOffset": 53.340118408203125,
-      "yOffset": 18.5101318359375,
+      "xOffset": 63.291534423828125,
+      "yOffset": 40.2255859375,
       "active": false
     },
     {
@@ -129,10 +134,7 @@
       "x": -40.6376953125,
       "y": 500.3049011230469,
       "id": 7,
-      "type": "text",
-      "xOffset": 71.84613037109375,
-      "yOffset": 44.07232666015625,
-      "active": false
+      "type": "text"
     },
     {
       "label": "Festival",
@@ -141,20 +143,41 @@
       "x": 293.16607666015625,
       "y": 493.607421875,
       "id": 8,
-      "type": "text",
-      "xOffset": 74.20391845703125,
-      "yOffset": 18.87738037109375,
+      "type": "text"
+    },
+    {
+      "type": "decision",
+      "label": "Decision",
+      "options": [
+        {
+          "next": 3
+        },
+        {
+          "next": 2
+        }
+      ],
+      "x": 503.6189270019531,
+      "y": 1.0990753173828125,
+      "conditionStat": "cha",
+      "conditionRequirement": "25",
+      "id": 9,
+      "xOffset": 80.466796875,
+      "yOffset": 46.66815185546875,
       "active": false
     }
   ],
   "edges": [
     {
       "source": 1,
-      "target": 3
+      "target": 9
     },
     {
       "source": 1,
-      "target": "2"
+      "target": 2
+    },
+    {
+      "source": 1,
+      "target": 3
     },
     {
       "source": 2,
@@ -183,31 +206,44 @@
     {
       "source": 6,
       "target": 8
+    },
+    {
+      "source": 9,
+      "target": 3
+    },
+    {
+      "source": 9,
+      "target": 2
     }
   ],
   "selectedNode": {
     "id": 1,
-    "x": 406.2021255493164,
-    "y": -127.37017822265625,
-    "xOffset": 71.65850830078125,
-    "yOffset": 43.59661865234375,
-    "active": false,
-    "text": "You begin your adventure in a foreign land, where magic thrives. Before you is a crossroads between the village of nearby town or the castle. Which way will you seek?",
+    "x": 525.6093521118164,
+    "y": -312.82566833496094,
+    "text": "You begin your adventure in a foreign land, where magic thrives. Before you is a man. You ask the man on which path to take and he offers to guide you. You sense that he could be up to something bad, but you think there may be a chance to convince him to take you somewhere safe.",
     "color": "red",
     "options": [
       {
-        "text": "Head to the castle",
+        "text": "Ask the man for directions (25 CHA)",
         "value": 0,
-        "next": 3
+        "next": 9
       },
       {
-        "text": "Head to the village",
+        "text": "Ignore the man and take the left path",
         "value": 0,
-        "next": "2"
+        "next": 2
+      },
+      {
+        "text": "Ignore the man and take the right path",
+        "value": 0,
+        "next": 3
       }
     ],
-    "label": "Start adventure"
+    "label": "Start adventure",
+    "xOffset": 78.07342529296875,
+    "yOffset": 41.41546630859375,
+    "active": false
   },
   "selectedNodeIndex": 0,
-  "gameMode": ""
+  "gameMode": "dnd"
 }

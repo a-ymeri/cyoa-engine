@@ -1,0 +1,236 @@
+{
+  "nodes": [
+    {
+      "label": "House",
+      "text": "You are at the front of an abandoned house. There's 3 branching paths you can see.",
+      "options": [
+        {
+          "text": "west",
+          "value": 0,
+          "next": 2,
+          "password": "desire"
+        },
+        {
+          "text": "east",
+          "value": 0,
+          "next": 3
+        },
+        {
+          "text": "south",
+          "value": 0,
+          "next": 4
+        },
+        {
+          "text": "in",
+          "value": 0,
+          "next": 5,
+          "password": "zork"
+        }
+      ],
+      "x": 407.8402786254883,
+      "y": 277.41835021972656,
+      "id": 1,
+      "type": "text",
+      "xOffset": 63.511810302734375,
+      "yOffset": 31.244659423828125,
+      "active": false
+    },
+    {
+      "label": "Rainbow land",
+      "text": "Congratulations on making it past the wall of desire. You are in a land full of flowers of different colors. ",
+      "options": [
+        {
+          "text": "east",
+          "value": 0,
+          "next": 1,
+          "password": ""
+        },
+        {
+          "text": "west",
+          "value": 0,
+          "next": 6
+        }
+      ],
+      "x": 114.23719596862793,
+      "y": 275.8385238647461,
+      "id": 2,
+      "type": "text",
+      "xOffset": 70.03399658203125,
+      "yOffset": 48.350555419921875,
+      "active": false
+    },
+    {
+      "label": "Eastern Forest",
+      "text": "You come across a forest, with a large tree in front of you. At its foot rests a letter.",
+      "options": [
+        {
+          "text": "west",
+          "value": 0,
+          "next": 1,
+          "password": ""
+        }
+      ],
+      "x": 659.0351409912109,
+      "y": 279.264892578125,
+      "id": 3,
+      "type": "text",
+      "xOffset": 46.6754150390625,
+      "yOffset": 48.95208740234375,
+      "active": false,
+      "items": [
+        {
+          "name": "Tree",
+          "description": "A large tree with some carving in it. It reads:\n\n\"West of home, there's a dome, the key you require is desire\""
+        },
+        {
+          "name": "Letter",
+          "description": "The mystery can be solved by the tree. A real mystree. But also:\n\nZee Oh Arr Kay\n\nYou feel at home hearing these letters",
+          "keyID": "key2",
+          "pickable": true
+        }
+      ]
+    },
+    {
+      "label": "Southern forest",
+      "text": "There's nothing here but trees. They all look identical to one another",
+      "options": [
+        {
+          "text": "north",
+          "value": 0,
+          "next": 1,
+          "password": ""
+        }
+      ],
+      "x": 405.54993438720703,
+      "y": 483.0530242919922,
+      "id": 4,
+      "type": "text",
+      "xOffset": 84.11505126953125,
+      "yOffset": 36.30035400390625,
+      "active": false,
+      "items": [
+        {
+          "name": "Paper",
+          "description": "There's no hint here, I think. Check yeast of house? or was it east?",
+          "keyID": "",
+          "pickable": true
+        }
+      ]
+    },
+    {
+      "label": "Inside house",
+      "text": "You are inside a house. Come back after we've finished this game...",
+      "options": [
+        {
+          "text": "out",
+          "value": 0,
+          "next": 1
+        }
+      ],
+      "x": 427.57146072387695,
+      "y": 93.78369140625,
+      "id": 5,
+      "type": "text",
+      "xOffset": 43.699981689453125,
+      "yOffset": 3.7889251708984375,
+      "active": false
+    },
+    {
+      "label": "Eastern rainbow land",
+      "text": "The rainbow land expands far to the east. You grow more and more tired as you traverse it",
+      "options": [
+        {
+          "text": "east",
+          "value": 0,
+          "next": 2
+        }
+      ],
+      "x": -183.67727661132812,
+      "y": 272.8609619140625,
+      "id": 6,
+      "type": "text",
+      "xOffset": 99.57412719726562,
+      "yOffset": 43.434844970703125,
+      "active": false
+    }
+  ],
+  "edges": [
+    {
+      "source": 1,
+      "target": 2
+    },
+    {
+      "source": 1,
+      "target": 3
+    },
+    {
+      "source": 1,
+      "target": 4
+    },
+    {
+      "source": 1,
+      "target": 5
+    },
+    {
+      "source": 2,
+      "target": 1
+    },
+    {
+      "source": 2,
+      "target": 6
+    },
+    {
+      "source": 3,
+      "target": 1
+    },
+    {
+      "source": 4,
+      "target": 1
+    },
+    {
+      "source": 5,
+      "target": 1
+    },
+    {
+      "source": 6,
+      "target": 2
+    }
+  ],
+  "selectedNode": {
+    "label": "House",
+    "text": "You are at the front of an abandoned house. There's 3 branching paths you can see.",
+    "options": [
+      {
+        "text": "west",
+        "value": 0,
+        "next": 2,
+        "password": "desire"
+      },
+      {
+        "text": "east",
+        "value": 0,
+        "next": 3
+      },
+      {
+        "text": "south",
+        "value": 0,
+        "next": 4
+      },
+      {
+        "text": "in",
+        "value": 0,
+        "next": 5,
+        "password": "zork"
+      }
+    ],
+    "x": 407.8402786254883,
+    "y": 277.41835021972656,
+    "id": 1,
+    "type": "text",
+    "xOffset": 63.511810302734375,
+    "yOffset": 31.244659423828125,
+    "active": false
+  },
+  "selectedNodeIndex": 0,
+  "gameMode": "zork"
+}

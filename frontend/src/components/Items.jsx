@@ -1,29 +1,46 @@
 import React from "react";
 import { useGlobalTree } from "../contexts/NodeContext";
 import { TextField, Button } from "@mui/material";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Items = ({ element }) => {
-  const { addItem, globalState } = useGlobalTree();
+  const { addItem, globalState, editItem, removeItem } = useGlobalTree();
   const gameMode = globalState.gameMode;
-  const handleEditOptionText = (e, index, item) => {
-    item = { ...item, text: e.target.value };
+
+  const handleEditItemText = (e, index, item) => {
+    item = { ...item, name: e.target.value };
+    editItem(index, item);
+  };
+
+  const handleEditItemDescription = (e, index, item) => {
+    item = { ...item, description: e.target.value };
+    editItem(index, item);
+  };
+
+  const handleEditItemKeyID = (e, index, item) => {
+    item = { ...item, keyID: e.target.value };
+    editItem(index, item);
   };
 
   if (gameMode != "zork") {
     return <div></div>;
   }
 
+  console.log(element.items);
   return (
     <div
-      style={{
-        // textAlign: "center",
-      }}
+      style={
+        {
+          // textAlign: "center",
+        }
+      }
     >
       <h2>Items:</h2>
       {element.items?.map((item, index) => {
         return (
           <div
-            key={index}
+            key={item.id + index}
             style={{
               marginBottom: "10px",
               margin: "5px",
@@ -34,32 +51,61 @@ const Items = ({ element }) => {
             }}
           >
             <div>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <TextField
+                  style={{
+                    width: "70%",
+                    fontSize: "20px",
+                    marginBottom: "10px",
+                  }}
+                  label="Name"
+                  value={item.name}
+                  onChange={(e) => {
+                    handleEditItemText(e, index, item);
+                  }}
+                />
+                <Button
+                  style={{
+                    width: "25%",
+                    fontSize: "20px",
+                    marginBottom: "10px",
+                    backgroundColor: "#EF233C",
+                    marginLeft: "20px",
+                  }}
+                  variant="contained"
+                  onClick={() => {
+                    removeItem();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </Button>
+              </div>
               <TextField
                 style={{
-                  width: "100%",
-                  fontSize: "20px",
+                  width: "70%",
+                  fontSize: "16px",
+                  color: "white",
                   marginBottom: "10px",
                 }}
-                label="Name"
-                value={item.text}
-                onChange={(e) => {
-                  handleEditOptionText(e, index, item);
-                }}
-              />
-              <TextField
-                style={{ width: "100%", fontSize: "16px", color: "white", marginBottom: "10px" }}
                 label="Description"
-                value={item.text}
+                multiline
+                value={item.description}
                 onChange={(e) => {
-                  handleEditOptionText(e, index, item);
+                  handleEditItemDescription(e, index, item);
                 }}
               />
               <TextField
-                style={{ width: "100%", fontSize: "16px", color: "white", marginBottom: "10px" }}
-                label="Key ID"
-                value={item.text}
+                style={{
+                  width: "25%",
+                  fontSize: "16px",
+                  color: "white",
+                  marginBottom: "10px",
+                  marginLeft: "5%",
+                }}
+                label="Key Name"
+                value={item.keyID}
                 onChange={(e) => {
-                  handleEditOptionText(e, index, item);
+                  handleEditItemKeyID(e, index, item);
                 }}
               />
               Can be picked up:
@@ -67,35 +113,17 @@ const Items = ({ element }) => {
                 type="checkbox"
                 checked={item.pickable}
                 onChange={(e) => {
-                  // handleEditOptionText(e, index, item);
+                  item = { ...item, pickable: e.target.checked };
+                  editItem(index, item);
                 }}
               />
             </div>
-            <button
-              style={{
-                display: "flex",
-                textAlign: "center",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#ef233c",
-                flex: 1,
-                color: "white",
-                // width: "20%",
-                marginLeft: "10px",
-                onClick: () => {
-                  //   deleteItem(index);
-                },
-                borderRadius: "0px",
-              }}
-            >
-              Delete
-            </button>
           </div>
         );
       })}
       <button
         style={{ width: "80%", marginTop: "10px", display: "block" }}
-        // onClick={addItem}
+        onClick={addItem}
       >
         Add Item
       </button>

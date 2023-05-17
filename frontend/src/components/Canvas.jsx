@@ -100,7 +100,7 @@ export default function Canvas() {
             pointerEvents="none"
             //   style={{
             //     textDecoration: (active == index ? "underline" : "none"),
-            //   }}
+          //   }}
           >
             {truncate(item.id + ": " + item.label, 20)}
           </text>

@@ -210,6 +210,15 @@ export const TreeContextProvider = ({ children, value }) => {
     });
   };
 
+  const removeOption = (index) => {
+    setGlobalState((curr) => {
+      let newObj = { ...curr };
+      let nodeIndex = newObj.selectedNodeIndex;
+      newObj.nodes[nodeIndex].options.splice(index, 1);
+      return newObj;
+    });
+  };
+
   const editNodeText = (text) => {
     setGlobalState((curr) => {
       let newObj = { ...curr };
@@ -229,15 +238,41 @@ export const TreeContextProvider = ({ children, value }) => {
     });
   };
 
+  const setCondition = (field, value) => {
+    setGlobalState((curr) => {
+      let newObj = { ...curr };
+      newObj.nodes[globalState.selectedNodeIndex][field] = value;
+      return newObj;
+    });
+  };
+
   const addItem = () => {
     setGlobalState((curr) => {
       let newObj = { ...curr };
       if (!newObj.nodes[globalState.selectedNodeIndex].items)
         newObj.nodes[globalState.selectedNodeIndex].items = [];
       newObj.nodes[globalState.selectedNodeIndex].items.push({
-        label: "Empty",
-        text: "",
+        name: "",
+        description: "",
+        pickable: false,
+        keyID: "",
       });
+      return newObj;
+    });
+  };
+
+  const editItem = (index, item) => {
+    setGlobalState((curr) => {
+      let newObj = { ...curr };
+      newObj.nodes[globalState.selectedNodeIndex].items[index] = item;
+      return newObj;
+    });
+  };
+
+  const removeItem = (index) => {
+    setGlobalState((curr) => {
+      let newObj = { ...curr };
+      newObj.nodes[globalState.selectedNodeIndex].items.splice(index, 1);
       return newObj;
     });
   };
@@ -256,7 +291,11 @@ export const TreeContextProvider = ({ children, value }) => {
         editNodeLabel,
         importTree,
         addItem,
-        resetTree
+        resetTree,
+        setCondition,
+        removeOption,
+        editItem,
+        removeItem,
       }}
     >
       {children}

@@ -5,22 +5,10 @@ import Options from "./Options";
 import Items from "./Items";
 
 const NodeDescription = () => {
-  const {
-    globalState,
-    addOption,
-    editOption,
-    editNodeText,
-    addNode,
-    editNodeLabel,
-    removeNode,
-    addItem,
-  } = useGlobalTree();
+  const { globalState, editOption, editNodeText, editNodeLabel } =
+    useGlobalTree();
   const element = globalState.nodes[globalState.selectedNodeIndex];
-
-  const handleEditOptionText = (e, index, option) => {
-    option = { ...option, text: e.target.value };
-    editOption(index, option);
-  };
+  const gameMode = globalState.gameMode;
 
   const handleEditText = (e) => {
     editNodeText(e.target.value);
@@ -31,14 +19,12 @@ const NodeDescription = () => {
   };
   return (
     <div>
-      <hr></hr>
-
       <h4>Node id: {element.id}</h4>
 
       <div>
         <TextField
           id="outlined-basic"
-          label="Label"
+          label={gameMode === "zork" ? "Area name" : "Label"}
           variant="outlined"
           value={element.label}
           onChange={handleEditLabel}
@@ -52,7 +38,7 @@ const NodeDescription = () => {
         <div>
           <TextField
             id="outlined-basic"
-            label="Text"
+            label={gameMode === "zork" ? "Description" : "Text"}
             variant="outlined"
             value={element.text}
             onChange={handleEditText}
@@ -64,7 +50,7 @@ const NodeDescription = () => {
           />
         </div>
       )}
-      <hr></hr>
+      {/* <hr></hr> */}
 
       <Options />
       <Items element={element} />

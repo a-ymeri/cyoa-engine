@@ -13,57 +13,62 @@ total_score = 10
 current_score = 0
 
 def describe_node(current_node):
-    print(current_node.text)
+    print(current_node.area_name)
+    print(current_node.area_description)
 
 
-def get_next_state(node_list, state, user_input):
+def password_routine(password):
+    print("This exit requires a password. If you don't know the password, you can try to guess it, or type quit to come back later.")
+    user_input = input("What is the password? ")
+    while(user_input != password and user_input != "quit"):
+        print("That is not the correct password.")
+        user_input = input("What is the password? ")
+    if(user_input == "quit"):
+        print("You have chosen to come back later.")
+        return False
+    print("That is the correct password. You may proceed.")
+    return True
+
+def get_next_node(node_list, current_node, user_input):
     if(user_input == None):
-        return state
+        return current_node.id
     
     if(user_input == "empty"):
         print("You must specify a compass direction.")
-        return state
+        return current_node.id
     if(user_input == "invalid"):
         print("I am not familiar with that direction.")
-        return state
+        return current_node.id
     
-    current_node = node_list[state]
     exits = current_node.exits
-    new_state = state
 
+    new_state = current_node.id
     if user_input not in [exit['direction'] for exit in exits]:
         print("[There is no path in that direction, or you have entered an invalid command.]")
     else:
         for exit in exits:
             if exit['direction'] == user_input:
+                if(exit.get("password", None) != ""):
+                    passed = password_routine(exit["password"])
+                    if(not passed):
+                        return current_node.id
                 new_state = exit['next']
                 break
-
-
     return new_state
 
 def sanitize_input(user_input):
-    multi_word_expressions = ['turn on', 'turn off']
-
     stop_words = set(stopwords.words('english'))
     keywords = ['all', 'go', 's', 'n', 'e', 'w', 'u', 'd', 'in', 'out']
 
     for keyword in keywords:
         stop_words.discard(keyword)
 
-    for expression in multi_word_expressions:
-        user_input = user_input.replace(expression, expression.replace(' ', '_'))
-
     words = nltk.word_tokenize(user_input)
-
-    # sentence = re.sub(r'[^\w\s]', '', sentence)
 
     filtered_sentence = [w for w in words if not w in stop_words]    
 
-    #stem
-    # ps = nltk.PorterStemmer()
-    # exceptions = ["inventory"]
-    # filtered_sentence = [ps.stem(w) for w in filtered_sentence if w not in exceptions]
+    ps = nltk.PorterStemmer()
+    filtered_sentence = [ps.stem(w) for w in filtered_sentence]
     return filtered_sentence
 
 def get_direction(user_input):
@@ -97,7 +102,7 @@ def get_direction(user_input):
 
 def get_action(user_input, game_dictionary, current_node):
 
-    exits, commands, base_commands = game_dictionary
+    commands, base_commands = game_dictionary
     if(len(user_input) == 1):
         #Provided an action, but no object
         if(user_input[0] in base_commands):
@@ -122,19 +127,35 @@ def get_action(user_input, game_dictionary, current_node):
 
 
 def look(current_node, object):
+    object = str.lower(object)
     room_synonyms = ['room', 'area', 'place', 'location', '', 'around', 'here', None]
+
     if(object in room_synonyms):
-        print(current_node.text)
-    else:
+        print(current_node.area_description)    
+    elif object in [str.lower(item.name) for item in current_node.items]:
         for item in current_node.items:
-            if item.name == object:
-                print(item.description)
+            if str.lower(item.name) == object:
+                item_description = item.description
+                if item_description == None or item_description == "":
+                    item_description = "You have no idea what this is."
+                print(item_description)
                 break
+    elif object in [str.lower(item.name) for item in inventory]:
+        for item in inventory:
+            if str.lower(item.name) == object:
+                    item_description = item.description
+                    if item_description == None or item_description == "":
+                        item_description = "You have no idea what this is."
+                    print(item_description)        
+                    break
+    else:
+        print("I don't see that here.")
 
 def take(current_node:Room, object):
     global inventory
     global current_score
     global total_score
+
 
     if(len(current_node.items) == 0):
         print("There is nothing to take here.")
@@ -143,6 +164,8 @@ def take(current_node:Room, object):
     # print(object)
     if object == "all":
         for i in range(len(current_node.get_items()), 0, -1):
+            if current_node.items[i-1].pickable == False:
+                continue
             item = current_node.items[i-1]
             print("You have taken the " + item.name + ".")
             inventory.append(item)
@@ -175,7 +198,7 @@ def drop(current_node, object):
             inventory.remove(item)
     else:
         for item in inventory:
-            if item.name == object:
+            if str.lower(item.name) == object:
                 print("You have dropped the " + item.name + ".")
                 current_node.items.append(item)
                 # current_score -= item.score
@@ -194,42 +217,55 @@ def view_inventory():
     for item in inventory:
         print(item.name)
 
-
-def run():
-    zork_config = fr.readFile('story_zork.json')
-    #create node_list array of Room objects. The json objects may not have some fields, so we need to pass None for those.
+def load_game(file_name):
+    zork_config = fr.readFile(file_name)
     node_list = []
     for node in zork_config['nodes']:
-        node_list.append(Room(node))
+        node_list.append(Room(id=node['id'], area_name=node.get("label", ""), area_description=node.get("text", ""), items=node.get("items", []), exits=node.get('options', [])))
+    
+    return node_list
 
-    #store all exits in a set
-    exits = set()
-    for node in node_list:
-        for exit in node.exits:
-            exits.add(exit['direction'])
-        
+
+def get_state_index(node_list, state):
+    for i in range(len(node_list)):
+        if node_list[i].id == state:
+            return i
+    return -1
 
     
-    exits = list(exits)
+def get_node(node_list, node_id):
+    for node in node_list:
+        if node.id == node_id:
+            return node
+    return None
+
+def run(file_name):
+    node_list = load_game(file_name)
 
     #In zork, "go north" and "north" and "n" are all valid commands. We need to parse the user input to figure out what they mean.
     #We'll do this by creating a dictionary that maps the user input to the direction.
     #For example, if the user types "go north", we'll look up "go north" in the dictionary and get "north".
     
-    commands = zork_config['mappings']
+    commands = [
+        ["go", ["walk", "head", "run", "move", "travel"]],
+        ["take", ["grab", "get", "pick"]],
+        ["drop", ["leave", "put"]],
+        ["look", ["examine", "inspect", "read"]],
+        ["inventory", ["i", "inv"]],
+        ["help", ["h", "?"]],
+        ["quit", ["q", "exit"]],
+        ["inventory", ["i", "inv"]]
+    ]
     base_commands = [command[0] for command in commands]
 
-    game_dictionary = (exits, commands, base_commands)
+    game_dictionary = (commands, base_commands)
 
-    state = 0
+    node_id = 1
 
-    describe_node(node_list[state])
-
+    describe_node(get_node(node_list, node_id))
 
     while True:
-
-        current_node = node_list[state]
-
+        current_node = get_node(node_list, node_id)
         print("> ", end='')
         user_input = input()
         os.system('cls' if os.name=='nt' else 'clear')
@@ -246,8 +282,8 @@ def run():
         match(action):
             case ['go', direction]:
                 direction = get_direction(direction)
-                state = get_next_state(node_list, state, direction)
-                describe_node(node_list[state])
+                node_id = get_next_node(node_list, current_node, direction)
+                describe_node(get_node(node_list, node_id))
             case ['look', object]:
                 look(current_node, object)
             case ['take', object]:

@@ -38,33 +38,10 @@ def get_next_state(node_list, state, user_input):
     # If the user input is invalid, return the current state
     return state
 
-def run():
+def run(file_path):
 
-    #do a cls
-    os.system('cls' if os.name=='nt' else 'clear')
-
-    if(len(os.listdir('Stories')) == 0):
-        print(" -- No stories found. Please add a story to the Stories folder. -- ")
-        return -1
-    #ask which file to use
-
-
-    print("Which file would you like to use?")
-    for idx, file in enumerate(os.listdir('Stories')):
-        print(file, f"({idx + 1})")
-    file = input()
-    if file.isdigit():
-        file = int(file)
-        if file <= len(os.listdir('Stories')):
-            file = os.listdir('Stories')[file - 1]
-        else:
-            print(" -- Invalid file. Please input a number between 1 and", len(os.listdir('Stories')), "or 'quit' to exit the game. -- ")
-            return -1
-    elif file == 'quit':
-        return -1
-    
     #read file
-    node_list = fr.readFile('Stories/' + file).get('nodes', [])
+    node_list = fr.readFile(file_path).get('nodes', [])
 
     
     state = 1

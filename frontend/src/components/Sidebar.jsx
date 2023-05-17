@@ -6,7 +6,8 @@ import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import NodeDescription from "./NodeDescription";
 export default function Sidebar() {
-  const { addNode, removeNode, globalState, importTree, resetTree } = useGlobalTree();
+  const { addNode, removeNode, globalState, importTree, resetTree } =
+    useGlobalTree();
 
   const handleDeleteNode = () => {
     removeNode();
@@ -17,14 +18,17 @@ export default function Sidebar() {
       type: "decision",
       label: "Decision",
       options: [0, 0],
-      requirement: 0,
-      stat: "",
       x: 0,
       y: 0,
       conditionStat: "",
       conditionRequirement: 0,
     };
     addNode(decisionNode);
+  };
+
+  const copy = () => {
+    //copy globalState to clipboard
+    navigator.clipboard.writeText(JSON.stringify(globalState, null, 2));
   };
 
   //function that downloads globalState as a json file
@@ -44,6 +48,16 @@ export default function Sidebar() {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  };
+
+  const handleImportTree = (e) => {
+    let file = e.target.files[0];
+    let reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = () => {
+      let data = JSON.parse(reader.result);
+      importTree(data);
+    };
   };
 
   return (
@@ -67,10 +81,11 @@ export default function Sidebar() {
           justifyContent: "center",
           marginBottom: "10px",
           paddingBottom: "10px",
-          borderBottom: "1px solid black",
+          // borderBottom: "1px solid black",
         }}
       >
         <Button onClick={resetTree}>Reset</Button>
+        <Button onClick={copy}>Copy</Button>
         <Button
           onClick={download}
           style={{
@@ -82,10 +97,10 @@ export default function Sidebar() {
         </Button>
         <Button variant="contained" component="label">
           Upload File
-          <input type="file" hidden />
+          <input type="file" hidden onChange={handleImportTree} />
         </Button>
       </div>
-      <hr></hr>
+
 
       <div
         style={{

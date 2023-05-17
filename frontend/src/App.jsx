@@ -75,6 +75,12 @@ function App() {
 }
 
 const Navbar = () => {
+  //get url
+  let gameMode = window.location.pathname.split("/")[1];
+  if (gameMode == "") {
+    gameMode = "story";
+  }
+  const [active, setActive] = useState(gameMode);
   return (
     <>
       <div
@@ -86,7 +92,14 @@ const Navbar = () => {
           padding: "10px",
         }}
       >
-        <h2 style={{}}>CYOA Level editor</h2>
+        <h2
+          style={{
+            borderRight: "1px solid #D5AC4E",
+            paddingRight: "1rem",
+          }}
+        >
+          CYOA Level editor
+        </h2>
         <div
           className="Nav"
           style={{
@@ -104,10 +117,22 @@ const Navbar = () => {
               href="/"
               style={{
                 textDecoration: "none",
-                color: "#8d99ae",
+                color: active == "story" ? "white" : "#8d99ae",
               }}
             >
               Story
+            </a>
+          </div>
+
+          <div style={{ paddingRight: "1rem" }}>
+            <a
+              href="/dnd"
+              style={{
+                textDecoration: "none",
+                color: active == "dnd" ? "white" : "#8d99ae",
+              }}
+            >
+              D&D
             </a>
           </div>
           <div style={{ paddingRight: "1rem" }}>
@@ -115,21 +140,10 @@ const Navbar = () => {
               href="/zork"
               style={{
                 textDecoration: "none",
-                color: "#8d99ae",
+                color: active == "zork" ? "white" : "#8d99ae",
               }}
             >
-              Zork
-            </a>
-          </div>
-          <div style={{ paddingRight: "1rem" }}>
-            <a
-              href="/dnd"
-              style={{
-                textDecoration: "none",
-                color: "#8d99ae",
-              }}
-            >
-              D&D
+              Exploration
             </a>
           </div>
         </div>
